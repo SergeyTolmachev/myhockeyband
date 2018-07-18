@@ -14,6 +14,106 @@
             "date": 1531926556752,
             "name": "server/logs/2018-07-18-18errors.log",
             "hash": "c778e0a2d17671a0e5b1ce1e777adead"
+        },
+        {
+            "date": 1531927323011,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "463c5f64a8118aebe9ed269ed5077d67"
+        },
+        {
+            "date": 1531927323014,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "3a3b7ec4ac4eae42f86cead24cedffa3"
+        },
+        {
+            "date": 1531927363606,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "8f9388eb18751a002e2127cf61e03a26"
+        },
+        {
+            "date": 1531927363609,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "9440f1b87457f5104bb150ba99a39d6c"
+        },
+        {
+            "date": 1531927496872,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "b9cd0f3f7966b091ca55648faf498a04"
+        },
+        {
+            "date": 1531927496875,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "4bf59e9c9e030b9454d8c3c1f58c307f"
+        },
+        {
+            "date": 1531927585854,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "8104947b3a31e8e96ccd42f3b2b540fc"
+        },
+        {
+            "date": 1531927585857,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "3f4e3d7cb5d17263d84d9aa7fed21e88"
+        },
+        {
+            "date": 1531927805495,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "2bb4bba3df59f81352e92e06516f0a37"
+        },
+        {
+            "date": 1531927805498,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "38aae44df016021a09345a3e1da9a43e"
+        },
+        {
+            "date": 1531928271943,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "43987a63aada732ce9146ed7669fbaf1"
+        },
+        {
+            "date": 1531928271946,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "33de2adac0fd1a95aae284dce7fb4665"
+        },
+        {
+            "date": 1531928300278,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "88ab8f151b321fe61a448380407a948c"
+        },
+        {
+            "date": 1531928300282,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "4431e6cf7947f033dc598221a62e65c1"
+        },
+        {
+            "date": 1531928333564,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "9008b210625a4aa4b3256edae7da837c"
+        },
+        {
+            "date": 1531928333567,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "3f3a51d3ca9e7256945b6d00fabc1e1f"
+        },
+        {
+            "date": 1531928431972,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "494dd1195092cb17f1b1b710fbdcf0c4"
+        },
+        {
+            "date": 1531928431974,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "f414580fa672259e5c1a36a4f1f69f07"
+        },
+        {
+            "date": 1531928451192,
+            "name": "server/logs/2018-07-18-18debug.log",
+            "hash": "26490a420dae110d2ea60a6ad48eedb1"
+        },
+        {
+            "date": 1531928451195,
+            "name": "server/logs/2018-07-18-18errors.log",
+            "hash": "d23c4f64efa3be0f499da397b391f968"
         }
     ]
 }

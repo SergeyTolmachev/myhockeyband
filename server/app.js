@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./utils/logger');
 const config = require('./config/configFile');
+const sequelize = require('./config/databaseConnect');
+
+
 
 const app = express();
 
