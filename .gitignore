@@ -60,3 +60,5 @@ typings/
 .idea/
 
 .DS_Store
+
+server/config/configFile.js
