@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
     "mysql2": "^1.5.3",
     "sequelize": "^4.38.0",
@@ -18,11 +20,12 @@
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.10.0"
+    "eslint-plugin-react": "^7.10.0",
+    "nodemon": "^1.18.3"
   },
   "scripts": {
     "start": "node server/app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon ./server/app"
   },
   "repository": {
     "type": "git",
