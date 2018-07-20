@@ -4,12 +4,10 @@ const logger = require('./utils/logger');
 const config = require('./config/configFile');
 const registration = require('./routes/registration');
 const authenticate = require('./routes/authenticate');
-const checkAuth = require('./middlewares/checkAuth');
 const logRequest = require('./middlewares/logRequest');
 const error404 = require('./middlewares/error404');
 const secret = require('./routes/secret');
 const getNHLTeamStats = require('./routes/getNHLTeamStats');
-
 
 
 const app = express();
@@ -23,20 +21,16 @@ app.use(logRequest);
 
 // пути не требующие авторизации
 
-app.use('/registration', registration);
+app.use('/registration', registration); // регистрация
 
-app.use('/authenticate', authenticate);
+app.use('/authenticate', authenticate); // аутентификация пользователя и выдача токена
 
-app.use('/getnhlteamstats', getNHLTeamStats);
+app.use('/getnhlteamstats', getNHLTeamStats);// получение статистики команд NHL
 
-
-// middleware для проверки авторизации
-
-//app.use(checkAuth);
 
 // пути требующие авторизации
 
-app.use('/secret',secret);
+app.use('/secret', secret);
 
 app.use(error404);
 
