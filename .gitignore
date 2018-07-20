@@ -1,6 +1,6 @@
 # Logs
-src/logs/*
-!src/logs/.gitkeep
+server/logs/*
+!server/logs/.gitkeep
 
 # Runtime data
 pids

@@ -8,6 +8,8 @@ const checkAuth = require('./middlewares/checkAuth');
 const logRequest = require('./middlewares/logRequest');
 const error404 = require('./middlewares/error404');
 const secret = require('./routes/secret');
+const getNHLTeamStats = require('./routes/getNHLTeamStats');
+
 
 
 const app = express();
@@ -24,6 +26,8 @@ app.use(logRequest);
 app.use('/registration', registration);
 
 app.use('/authenticate', authenticate);
+
+app.use('/getnhlteamstats', getNHLTeamStats);
 
 
 // middleware для проверки авторизации
