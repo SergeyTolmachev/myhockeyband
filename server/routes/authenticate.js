@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     if (userToCheck.count > 0) {
       if (await getHash(req.body.password, userToCheck.rows[0].dataValues.password)) {
         const token = jwt.sign({
-          login: req.query.login,
+          login: req.body.login,
         },
         config.secretForToken, {
           expiresIn: '1h',

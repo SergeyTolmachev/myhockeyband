@@ -8,6 +8,7 @@ const logRequest = require('./middlewares/logRequest');
 const error404 = require('./middlewares/error404');
 const secret = require('./routes/secret');
 const getNHLTeamStats = require('./routes/getNHLTeamStats');
+const game = require('./routes/game');
 
 
 
@@ -34,6 +35,7 @@ app.use('/getnhlteamstats', getNHLTeamStats);// получение статис�
 // пути требующие авторизации
 
 app.use('/secret', secret);
+app.use('/game', game);
 
 app.use(error404);
 

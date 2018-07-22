@@ -15,7 +15,7 @@ router.use((req, res, next) => {
           message: 'Ошибка проверки ключа',
         });
       }
-      req.decoded = decoded;
+      req.body.decoded = decoded;
       next();
     });
   } else {
