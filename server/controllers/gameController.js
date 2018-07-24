@@ -1,14 +1,15 @@
-const gameClass = require('../classes/gameClass');
+const userModel = require('../models/userModel');
+const gameModel = require('../models/gameModel');
 
 
 module.exports.createGame = async (req, res) => {
   if (req.body.playerGuestId && req.body.playerHomeId) {
-    const playerId = await gameClass.checkPlayerExists(req.body.decoded.login);
+    const playerId = await userModel.checkPlayerExists(req.body.decoded.login);
     if (!playerId) {
       return res.status(401).send('Данный пользователь не может создавать игры');
     }
 
-    if (!(await gameClass.checkGameTimeCreated(playerId))) {
+    if (!(await gameModel.checkGameTimeCreated(playerId))) {
       return res.status(401).send('Игры можно создавать не чаще 1 раза в 5 минут');
     }
 
@@ -46,7 +47,7 @@ module.exports.createGame = async (req, res) => {
       createdAtTime: new Date(),
     };
 
-    if (await gameClass.createGame(gameToCreate)) {
+    if (await gameModel.createGame(gameToCreate)) {
       return res.status(200).send('Игра успешно создана');
     }
     return res.status(401).send('Ошибка при создании игры');
@@ -56,19 +57,17 @@ module.exports.createGame = async (req, res) => {
 
 
 module.exports.updateGame = async (req, res) => {
-  if (!await gameClass.checkGameToUpdate(req.body.gameId)) {
+  if (!await gameModel.checkGameToUpdate(req.body.gameId)) {
     return res.status(404).send('Обновление игры невозможно');
   }
-  const userId = await gameClass.checkPlayerExists(req.body.decoded.login);
+  const userId = await userModel.checkPlayerExists(req.body.decoded.login);
 
-  if (! await gameClass.checkCreator(userId, req.body.gameId)) {
+  if (! await userModel.checkCreator(userId, req.body.gameId)) {
     return res.status(401).send('Отсутствуют права для обновления игры');
   }
 
   const gameToUpdate = {
     gameStatus: 'played',
-    //teamGuestId: req.body.teamGuestId,
-    //teamHomeId: req.body.teamHomeId,
     goalsGuest: req.body.goalsGuest,
     goalsHome: req.body.goalsHome,
     shootsGuest: req.body.shootsGuest,
@@ -94,7 +93,7 @@ module.exports.updateGame = async (req, res) => {
   };
 
 
-  if (await gameClass.updateGame(req.body.gameId, gameToUpdate)) {
+  if (await gameModel.updateGame(req.body.gameId, gameToUpdate)) {
     return res.status(201).send('Данные игры успешно обновлены');
   }
   return res.status(404).send('Ошибка при обновлении игры');

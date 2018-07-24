@@ -1,13 +1,9 @@
-const express = require('express');
-
+const teamStats = require('../models/teamStats');
 const logger = require('../utils/logger');
 const HTTPSRequest = require('../utils/HTTPSRequest');
 
 
-const router = express.Router();
-const teamStats = require('../models/teamStats');
-
-router.get('/:teamId', async (req, res) => {
+module.exports.getStats = async (req, res) => {
   const teamId = req.params.teamId;
   if ((typeof (+teamId) === 'number') && (teamId >= 1) && (teamId <= 54)){
     let data = await teamStats.getData(teamId);
@@ -22,7 +18,4 @@ router.get('/:teamId', async (req, res) => {
     res.status(404).send('неверные данные для запроса');
   }
 
-});
-
-
-module.exports = router;
+}

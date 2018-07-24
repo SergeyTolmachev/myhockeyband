@@ -1,46 +1,8 @@
-const Game = require('../models/game');
-const User = require('../models/user');
+const Game = require('../schemas/game');
 const logger = require('../utils/logger');
 
 
-class GameClass {
-  async checkPlayerExists(playerLogin) {
-    try {
-      const result = await User.findAndCount({
-        where: {
-          login: playerLogin,
-        },
-      });
-      if (result.count >= 0) {
-        return result.rows[0].dataValues.id;
-      }
-      return false;
-    } catch (error) {
-      logger.error('Ошибка проверка наличия игрока GameClass.CheckPlayerExists', error);
-    }
-  }
-
-
-  async checkCreator(userId, gameId) {
-    try {
-      const lastGameByUser = await Game.findAndCount({
-        where: {
-          id: gameId,
-        },
-      });
-      if (lastGameByUser.count <= 0 ){
-        return false
-      }
-      if (userId === lastGameByUser.rows[0].dataValues.createdById) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      logger.error('Ошибка проверка создателя игры GameClass.CheckCreator', error);
-    }
-  }
-
-
+class GameModel {
   async checkGameToUpdate(gameId) {
     try {
       const lastGameByUser = await Game.findAndCount({
@@ -113,4 +75,4 @@ class GameClass {
   }
 }
 
-module.exports = new GameClass();
+module.exports = new GameModel();

@@ -6,8 +6,7 @@ const registration = require('./routes/registration');
 const authenticate = require('./routes/authenticate');
 const logRequest = require('./middlewares/logRequest');
 const error404 = require('./middlewares/error404');
-const secret = require('./routes/secret');
-const getNHLTeamStats = require('./routes/getNHLTeamStats');
+const NHLTeams = require('./routes/NHLTeams');
 const game = require('./routes/game');
 
 
@@ -29,12 +28,11 @@ app.use('/registration', registration); // регистрация
 
 app.use('/authenticate', authenticate); // аутентификация пользователя и выдача токена
 
-app.use('/getnhlteamstats', getNHLTeamStats);// получение статистики команд NHL
+app.use('/NHLTeams', NHLTeams);// получение статистики команд NHL
 
 
 // пути требующие авторизации
 
-app.use('/secret', secret);
 app.use('/game', game);
 
 app.use(error404);
