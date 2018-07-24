@@ -1,6 +1,7 @@
 const User = require('../schemas/user');
 const hash = require('../utils/hash');
 const logger = require('../utils/logger');
+const userModel = require('../models/userModel');
 
 module.exports.registration = async (req, res) => {
   if (req.body.login && req.body.password && req.body.email) {
@@ -13,64 +14,23 @@ module.exports.registration = async (req, res) => {
       nickname: req.body.nickname || null,
       birthday: req.body.birthday || null,
     };
-    let loginFound = false;
+
+    if (await userModel.checkPlayerExists(req.body.login)) {
+      return res.status(400).json({ message: 'Пользователь с данным логином существует' });
+    }
+
+    if (await userModel.checkEmailExists(req.body.email)) {
+      return res.status(400).json({ message: 'Пользователь с данным email существует' });
+    }
 
     try {
-      const result = await User.findAndCount({
-        where: {
-          login: userToReg.login,
-        },
-      });
-      if (result.count > 0) {
-        logger.info(`количество совпадений логина ${result.count}`);
-        loginFound = true;
-      }
+      await User.create(userToReg);
+      res.status(200).send('Регистрация прошла успешно');
     } catch (error) {
-      logger.error('Ошибка проверки имени пользователя', error);
-    }
-
-    let emailFound = false;
-
-    try {
-      const result = await User.findAndCount({
-        where: {
-          email: userToReg.email,
-        },
-      });
-      if (result.count > 0) {
-        logger.info(`количество совпадений email ${result.count}`);
-        emailFound = true;
-      }
-    } catch (error) {
-      logger.error('Ошибка проверки имени пользователя', error);
-    }
-
-
-    if (loginFound) {
-      res.status(400).send('Пользователь с данным логином существует');
-      logger.info('Пользователь с данным логином существует');
-      emailFound = false;
-    }
-
-    if (emailFound) {
-      res.status(400).send('Данный email уже используется');
-      logger.info('Данный email уже используется');
-    }
-
-
-    const sum = !emailFound && !loginFound;
-    logger.info(`loginFound: ${loginFound} emailFound ${emailFound} sum ${sum}`);
-
-    if (!emailFound && !loginFound) {
-      try {
-        await User.create(userToReg);
-        res.status(200).send('Регистрация прошла успешно');
-      } catch (error) {
-        logger.error('Ошибка сохранения', error);
-        res.status(404).send('Возникла ошибка при регистрации');
-      }
+      logger.error('Ошибка сохранения', error);
+      res.status(404).send('Возникла ошибка при регистрации');
     }
   } else {
     res.status(400).send('Не верные данные для регистрации');
   }
-}
+};

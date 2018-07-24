@@ -3,6 +3,8 @@ const Game = require('../schemas/game');
 const User = require('../schemas/user');
 const logger = require('../utils/logger');
 const config = require('../config/configFile');
+const hash = require('../utils/hash');
+
 
 
 class UserModel {
@@ -13,12 +15,44 @@ class UserModel {
           login: playerLogin,
         },
       });
-      if (result.count >= 0) {
+      if (result.count > 0) {
         return result.rows[0].dataValues.id;
       }
       return false;
     } catch (error) {
       logger.error('Ошибка проверка наличия игрока GameClass.CheckPlayerExists', error);
+    }
+  }
+
+  async checkCorrectPassword(playerId, password) {
+    try {
+      const result = await User.findAndCount({
+        where: {
+          id: playerId,
+        },
+      });
+      if (await hash.getHash(password, result.rows[0].dataValues.password)){
+        return true;
+      }
+      return false;
+    } catch (error) {
+      logger.error('Ошибка проверка наличия игрока GameClass.CheckPlayerExists', error);
+    }
+  }
+
+  async checkEmailExists(email) {
+    try {
+      const result = await User.findAndCount({
+        where: {
+          email,
+        },
+      });
+      if (result.count > 0) {
+        return result.rows[0].dataValues.id;
+      }
+      return false;
+    } catch (error) {
+      logger.error('Ошибка проверка наличия email GameClass.CheckEmailExists', error);
     }
   }
 
