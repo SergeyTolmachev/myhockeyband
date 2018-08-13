@@ -1,7 +1,7 @@
 const teamStats = require('../models/teamStats');
 const logger = require('../utils/logger');
 const HTTPSRequest = require('../utils/HTTPSRequest');
-
+const TeamsNHL = require('../schemas/teamsNHL');
 
 module.exports.getStats = async (req, res) => {
   const teamId = req.params.teamId;
@@ -20,12 +20,9 @@ module.exports.getStats = async (req, res) => {
 };
 
 module.exports.getAllTeams = async (req, res) => {
-  let data = await teamStats.getData('AllTeamsNHL');
+  let data = await TeamsNHL.findAndCount();
   if (!data) {
-    logger.info('Запрос отправлен на апи NHL');
-    data = await HTTPSRequest.getRequest('https://statsapi.web.nhl.com/api/v1/teams/');
-    await teamStats.setData('AllTeamsNHL', data);
-    data = JSON.parse(data);
+    res.status(404).json({message: 'список конанд не найден'});
   }
   res.status(200).json(data);
 };
