@@ -5,7 +5,6 @@ const config = require('./config/configFile');
 const registration = require('./routes/registration');
 const authenticate = require('./routes/authenticate');
 const logRequest = require('./middlewares/logRequest');
-const error404 = require('./middlewares/error404');
 const NHLTeams = require('./routes/NHLTeams');
 const game = require('./routes/game');
 const player = require('./routes/player');

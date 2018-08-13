@@ -13,7 +13,7 @@ module.exports.registration = async (req, res) => {
       surname: req.body.surname || null,
       nickname: req.body.nickname || null,
       birthday: req.body.birthday || null,
-      teanId: req.body.teamId || null,
+      teamId: req.body.teamId || null,
     };
 
     if (await userModel.checkCorrectEmail(req.body.email)) {

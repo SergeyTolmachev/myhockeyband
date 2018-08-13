@@ -124,6 +124,19 @@ class UserModel {
       logger.error('Ошибка получения данных пользователей UserClass.getAllUsersData', error);
     }
   }
+
+  async updateUserData(playerId, userToUpdate){
+    try {
+      await User.update(userToUpdate, {
+        where: {
+          id: playerId,
+        },
+      });
+      return true;
+    } catch (error) {
+      logger.error('Ошибка обновление данных пользователя UserClass.updateuserData', error);
+    }
+  }
 }
 
 module.exports = new UserModel();

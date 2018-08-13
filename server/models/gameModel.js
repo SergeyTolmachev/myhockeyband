@@ -92,7 +92,6 @@ class GameModel {
 
   async updateGame(gameId, gameToUpdate) {
     try {
-      console.log(gameToUpdate);
       for (const key in gameToUpdate) {
         if (gameToUpdate[key] === null || !gameToUpdate[key]) {
           return false;
