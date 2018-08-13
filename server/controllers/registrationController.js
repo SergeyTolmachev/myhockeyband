@@ -13,7 +13,12 @@ module.exports.registration = async (req, res) => {
       surname: req.body.surname || null,
       nickname: req.body.nickname || null,
       birthday: req.body.birthday || null,
+      teanId: req.body.teamId || null,
     };
+
+    if (await userModel.checkCorrectEmail(req.body.email)) {
+      return res.status(400).json({ message: 'Email не соответствует формату электронной почты' });
+    }
 
     if (await userModel.checkPlayerExists(req.body.login)) {
       return res.status(400).json({ message: 'Пользователь с данным логином существует' });

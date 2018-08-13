@@ -2,88 +2,49 @@ const Sequelize = require('sequelize');
 const sequelize = require('../config/databaseConnect');
 
 const Game = sequelize.define('games', {
-  gameDate: {
-    type: Sequelize.DATE,
-  },
-  gameStatus: {
-    type: Sequelize.STRING,
-  },
-  playerGuestId: {
+  playerId: {
     type: Sequelize.INTEGER,
   },
-  playerHomeId: {
+  teamId: {
     type: Sequelize.INTEGER,
   },
-  teamGuestId: {
+  goals: {
     type: Sequelize.INTEGER,
   },
-  teamHomeId: {
+  shoots: {
     type: Sequelize.INTEGER,
   },
-  goalsGuest: {
+  hits: {
     type: Sequelize.INTEGER,
   },
-  goalsHome: {
+  timeInAttack: {
     type: Sequelize.INTEGER,
   },
-  shootsGuest: {
-    type: Sequelize.INTEGER,
-  },
-  shootsHome: {
-    type: Sequelize.INTEGER,
-  },
-  hitsGuest: {
-    type: Sequelize.INTEGER,
-  },
-  hitsHome: {
-    type: Sequelize.INTEGER,
-  },
-  timeInAttackGuest: {
-    type: Sequelize.INTEGER,
-  },
-  timeInAttackHome: {
-    type: Sequelize.INTEGER,
-  },
-  passesGuest: {
+  passes: {
     type: Sequelize.FLOAT,
   },
-  passesHome: {
-    type: Sequelize.FLOAT,
-  },
-  penaltyTimeGuest: {
+  penaltyTime: {
     type: Sequelize.TIME,
   },
-  penaltyTimeHome: {
+  powerPlays: {
+    type: Sequelize.INTEGER,
+  },
+  powerPlaysDone: {
+    type: Sequelize.INTEGER,
+  },
+  faceOffDone:{
+    type: Sequelize.INTEGER,
+  },
+  minutesPowerPlay: {
     type: Sequelize.TIME,
   },
-  powerPlaysGuest: {
+  faceToFace: {
     type: Sequelize.INTEGER,
   },
-  powerPlaysDoneGuest: {
+  faceToFaceDone: {
     type: Sequelize.INTEGER,
   },
-  powerPlaysHome: {
-    type: Sequelize.INTEGER,
-  },
-  powerPlaysDoneHome: {
-    type: Sequelize.INTEGER,
-  },
-  faceToFaceGuest: {
-    type: Sequelize.INTEGER,
-  },
-  faceToFaceDoneGuest: {
-    type: Sequelize.INTEGER,
-  },
-  faceToFaceHome: {
-    type: Sequelize.INTEGER,
-  },
-  faceToFaceDoneHome: {
-    type: Sequelize.INTEGER,
-  },
-  minorityGoalsGuest: {
-    type: Sequelize.INTEGER,
-  },
-  minorityGoalsHome: {
+  minorityGoals: {
     type: Sequelize.INTEGER,
   },
   createdById: {
@@ -91,6 +52,12 @@ const Game = sequelize.define('games', {
   },
   createdAtTime: {
     type: Sequelize.DATE,
+  },
+  gameId: {
+    type: Sequelize.INTEGER,
+  },
+  statusPlayer: {
+    type: Sequelize.CHAR,
   },
 }, {
   timestamps: false,

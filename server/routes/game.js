@@ -6,11 +6,14 @@ const gameController = require('../controllers/gameController');
 
 
 
-router.use(checkAuth);
+router.get('/:gameId', gameController.getGameData);
+router.get('/allGames/:playerId', gameController.getAllGameData);
 
-router.post('/create', gameController.createGame);
+//пути требующие авторизации
 
-router.put('/update', gameController.updateGame);
+router.post('/create', checkAuth, gameController.createGame);
+
+router.put('/update', checkAuth, gameController.updateGame);
 
 
 module.exports = router;

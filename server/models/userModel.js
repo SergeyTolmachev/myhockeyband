@@ -6,7 +6,6 @@ const config = require('../config/configFile');
 const hash = require('../utils/hash');
 
 
-
 class UserModel {
   async checkPlayerExists(playerLogin) {
     try {
@@ -31,7 +30,7 @@ class UserModel {
           id: playerId,
         },
       });
-      if (await hash.getHash(password, result.rows[0].dataValues.password)){
+      if (await hash.getHash(password, result.rows[0].dataValues.password)) {
         return true;
       }
       return false;
@@ -53,6 +52,15 @@ class UserModel {
       return false;
     } catch (error) {
       logger.error('Ошибка проверка наличия email GameClass.CheckEmailExists', error);
+    }
+  }
+
+  async checkCorrectEmail(email) {
+    try {
+      const result = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/.test(email);
+      if (result) { return false; } return true;
+    } catch (error) {
+      logger.error('Email не соответствует формату электронной почты', error);
     }
   }
 
@@ -83,6 +91,37 @@ class UserModel {
       return false;
     } catch (error) {
       logger.error('Ошибка проверка создателя игры GameClass.CheckCreator', error);
+    }
+  }
+
+  async getUserData(userId) {
+    try {
+      const userData = await User.findAndCount({
+        where: {
+          id: userId,
+        },
+        attributes: {
+          exclude: ['password'],
+        }
+      });
+      if (userData.count > 0) {
+        return userData.rows[0];
+      }
+
+      return false;
+    } catch (error) {
+      logger.error('Ошибка получнеия данных о пользователе GameClass.getUserData', error);
+    }
+  }
+
+  async getAllUsersData(){
+    try {
+      const usersData = await User.findAndCount({
+        attributes: ['id', 'login'],
+      });
+      return usersData.rows;
+    } catch (error) {
+      logger.error('Ошибка получения данных пользователей UserClass.getAllUsersData', error);
     }
   }
 }

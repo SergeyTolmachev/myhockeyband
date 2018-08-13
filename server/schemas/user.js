@@ -29,6 +29,9 @@ const User = sequelize.define('users', {
       isDate: true,
     },
   },
+  teamId: {
+    type: Sequelize.INTEGER,
+  }
 }, {
   timestamps: false,
 });

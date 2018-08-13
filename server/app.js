@@ -8,12 +8,14 @@ const logRequest = require('./middlewares/logRequest');
 const error404 = require('./middlewares/error404');
 const NHLTeams = require('./routes/NHLTeams');
 const game = require('./routes/game');
+const player = require('./routes/player');
 
 
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use('/static', express.static('public'));
 
@@ -22,20 +24,23 @@ app.use('/static', express.static('public'));
 app.use(logRequest);
 
 
-// пути не требующие авторизации
-
 app.use('/registration', registration); // регистрация
 
 app.use('/authenticate', authenticate); // аутентификация пользователя и выдача токена
 
 app.use('/NHLTeams', NHLTeams);// получение статистики команд NHL
 
+app.use('/player', player);// информация об игроках
 
-// пути требующие авторизации
+app.use('/game', game);// информаци об играх
 
-app.use('/game', game);
-
-app.use(error404);
+app.use(function error404(req, res) {
+  const dataToSend = {
+    message: 'Page not found',
+    url: `${req.host}${req.url}`,
+  };
+  res.status(404).json(dataToSend);
+});
 
 
 app.listen(config.port);
