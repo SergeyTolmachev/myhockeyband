@@ -13,7 +13,7 @@ router.get('/allGames/:playerId', gameController.getAllGameData);
 
 router.post('/create', checkAuth, gameController.createGame);
 
-router.put('/update', checkAuth, gameController.updateGame);
+//router.put('/update', checkAuth, gameController.updateGame); Временно не работает до появления супер админа
 
 
 module.exports = router;

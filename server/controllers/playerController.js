@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+const statisticModel = require('../models/statisticModel');
 
 
 module.exports.getPlayerData = async (req, res) => {
@@ -14,6 +15,15 @@ module.exports.getAllPlayersData = async (req, res) => {
   let playerData = await userModel.getAllUsersData();
   if (playerData){
     return res.status(200).json(playerData);
+  }
+  res.status(404).json({message: 'Отсутствуют пользователи в базе данных'});
+};
+
+
+module.exports.getAllPlayersStatistic = async (req, res) => {
+  let playersStats = await statisticModel.getAllUsersStatistic();
+  if (playersStats){
+    return res.status(200).json(playersStats);
   }
   res.status(404).json({message: 'Отсутствуют пользователи в базе данных'});
 };

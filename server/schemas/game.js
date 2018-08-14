@@ -59,6 +59,9 @@ const Game = sequelize.define('games', {
   statusPlayer: {
     type: Sequelize.CHAR,
   },
+  win: {
+    type: Sequelize.INTEGER,
+  },
 }, {
   timestamps: false,
 });

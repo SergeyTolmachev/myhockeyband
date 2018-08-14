@@ -1,22 +1,25 @@
 const userModel = require('../models/userModel');
 const gameModel = require('../models/gameModel');
 const matchModel = require('../models/matchModel');
-
+const statisticModel = require('../models/statisticModel');
 
 module.exports.createGame = async (req, res) => {
+  if (!req.body.guest || !req.body.home) {
+    return res.status(400).json({ message: 'отправлены не все данные для создания игры' });
+  }
   if (await gameModel.checkDataToCreateGame(req.body.guest)) {
-    res.status(400).json({ message: 'отправлены не все данные для создания игры' });
+    return res.status(400).json({ message: 'отправлены не все данные для создания игры' });
   }
   if (await gameModel.checkDataToCreateGame(req.body.home)) {
-    res.status(400).json({ message: 'отправлены не все данные для создания игры' });
+    return res.status(400).json({ message: 'отправлены не все данные для создания игры' });
   }
   const playerId = await userModel.checkPlayerExists(req.body.decoded.login);
   if (!playerId) {
-    return res.status(401).json({message: 'Данный пользователь не может создавать игры'});
+    return res.status(401).json({ message: 'Данный пользователь не может создавать игры' });
   }
 
   if (!(await gameModel.checkGameTimeCreated(playerId))) {
-    return res.status(401).json({message: 'Игры можно создавать не чаще 1 раза в 5 минут'});
+    return res.status(401).json({ message: 'Игры можно создавать не чаще 1 раза в 5 минут' });
   }
 
   const matchToCreate = {
@@ -31,8 +34,17 @@ module.exports.createGame = async (req, res) => {
   };
 
   const gameId = await matchModel.createMatch(matchToCreate);
-  let splitPowerPlaysGuest = req.body.guest.powerPlays.split('/');
-  let splitFaceToFacesGuest = req.body.guest.faceToFace.split('/');
+  const splitPowerPlaysGuest = req.body.guest.powerPlays.split('/');
+  const splitFaceToFacesGuest = req.body.guest.faceToFace.split('/');
+
+  let guestWin = 0;
+  let homeWin = 0;
+
+  if (req.body.guest.goals > req.body.home.goals) {
+    guestWin = 1;
+  } else {
+    homeWin = 1;
+  }
 
   const gameToCreateGuest = {
     playerId: req.body.guest.playerId,
@@ -52,12 +64,13 @@ module.exports.createGame = async (req, res) => {
     minorityGoals: req.body.guest.minorityGoals,
     createdById: playerId,
     createdAtTime: matchToCreate.createdTime,
-    gameId: gameId,
+    gameId,
     statusPlayer: 'guest',
+    win: guestWin,
   };
 
-  let splitPowerPlaysHome = req.body.home.powerPlays.split('/');
-  let splitFaceToFacesHome = req.body.home.faceToFace.split('/');
+  const splitPowerPlaysHome = req.body.home.powerPlays.split('/');
+  const splitFaceToFacesHome = req.body.home.faceToFace.split('/');
 
   const gameToCreateHome = {
     playerId: req.body.home.playerId,
@@ -77,12 +90,15 @@ module.exports.createGame = async (req, res) => {
     minorityGoals: req.body.home.minorityGoals,
     createdById: playerId,
     createdAtTime: matchToCreate.createdTime,
-    gameId: gameId,
+    gameId,
     statusPlayer: 'home',
+    win: homeWin,
   };
 
   if (await gameModel.createGame(gameToCreateGuest)) {
-    if (await gameModel.createGame(gameToCreateHome)){
+    if (await gameModel.createGame(gameToCreateHome)) {
+      await statisticModel.calcStatistic(req.body.home.playerId);
+      await statisticModel.calcStatistic(req.body.guest.playerId);
       return res.status(200).send('Игра успешно создана');
     }
   }
@@ -148,5 +164,4 @@ module.exports.getAllGameData = async (req, res) => {
     return res.status(200).json(gameData);
   }
   res.status(404).json({ message: 'Отсутствуют игры у запрашиваемого пользователя' });
-
 };
