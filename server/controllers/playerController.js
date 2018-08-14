@@ -33,7 +33,8 @@ module.exports.updatePlayerData = async (req, res) => {
   delete userToUpdate.password;
   delete userToUpdate.login;
   delete userToUpdate.email;
-  if (await userModel.updateUserData(req.body.decoded.login, userToUpdate)){
+  const playerId = await userModel.checkPlayerExists(req.body.decoded.login);
+  if (await userModel.updateUserData(playerId, userToUpdate)){
     return res.status(201).json({message: 'Данные пользователя успешно обновлены'});
   }
   res.status(401).json({message: 'Ошибка обновления данных пользователя'});
