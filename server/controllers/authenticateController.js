@@ -12,6 +12,7 @@ module.exports.authenticate = async (req, res) => {
   }
   const token = await userModel.getToken(req.body.login);
   const dataToSend = {
+    playerId: userId,
     success: true,
     message: 'аутентификация прошла успешно',
     token,
