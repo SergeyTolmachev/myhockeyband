@@ -8,12 +8,10 @@ const logRequest = require('./middlewares/logRequest');
 const NHLTeams = require('./routes/NHLTeams');
 const game = require('./routes/game');
 const player = require('./routes/player');
-const realTime = require('./routes/realTime');
 
 
 const app = express();
 
-const expressWs = require('express-ws')(app);
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,8 +33,6 @@ app.use('/NHLTeams', NHLTeams);// получение статистики ком
 app.use('/player', player);// информация об игроках
 
 app.use('/game', game);// информация об играх
-
-app.use('/realTime', realTime);// real-time информация
 
 app.use((req, res) => {
   const dataToSend = {
